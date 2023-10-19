@@ -1,0 +1,23 @@
+.formTitle{
+    text-align: center;
+}
+
+
+.row{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.firstRow{
+    margin-top: 10px;
+}
+
+.row mat-form-field{
+    width: 100%;
+    margin-top: 5px;
+}
+.actions{
+    padding: 10px 37px 10px 25px;
+}
+

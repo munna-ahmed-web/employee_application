@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dialog-input',
@@ -29,40 +30,30 @@ export class DialogInputComponent implements OnInit {
   });
 
   handleSubmit() {
-    if(this.userForm.valid){
-      if(this.data){
-        this.services.updateUser(this.data.id ,this.userForm.value).subscribe({
-          next: (val) => {
-            this.dialogRef.close();
-          },
-          error: (error) => {
-            console.log(error);
-          },
-        });
-      }else{
-        this.services.addUser(this.userForm.value).subscribe({
-          next: (val) => {
-            this.dialogRef.close();
-          },
-          error: (error) => {
-            console.log(error);
-          },
-        });
+    if (this.userForm.valid) {
+      if (this.data) {
+        this.services.updateUser(this.data.id, this.userForm.value);
+        this.dialogRef.close();
+      } else {
+        this.services.addUser(this.userForm.value);
+        this.dialogRef.close();
       }
     }
   }
 
-  closeDialog(){
-    this.dialogRef.close()
+  closeDialog() {
+    this.dialogRef.close();
   }
 
   ngOnInit(): void {
-    this.userForm.patchValue(this.data)
+    this.userForm.patchValue(this.data);
+
   }
 
   constructor(
-    public dialogRef: MatDialogRef<any>, 
+    public dialogRef: MatDialogRef<any>,
     private services: EmployeeService,
-    @Inject(MAT_DIALOG_DATA) public data : any
-    ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private http: HttpClient
+  ) {}
 }

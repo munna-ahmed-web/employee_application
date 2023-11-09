@@ -15,7 +15,7 @@ export class DataShowComponent implements OnInit {
   userData!: MatTableDataSource<any>;
   isdDataLoaded: boolean = false;
   displayedColumns: string[] = [
-    'id',
+    // 'id',
     'firstName',
     'lastName',
     'phone',
@@ -34,26 +34,14 @@ export class DataShowComponent implements OnInit {
   }
 
   dataLoad = () => {
-    this.services.getUserList().subscribe({
-      next: (value) => {
+    const value = this.services.getUserList()
         this.userData = new MatTableDataSource(value);
         this.isdDataLoaded = true;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
   };
 
-  handleDelete = (id: number) => {
-    this.services.deleteUser(id).subscribe({
-      next: (res) => {
-        this.dataLoad();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  handleDelete = (id : any) => {
+    this.services.deleteUser(id);
+    this.dataLoad();
   };
 
   handleEdit(data: any) {
